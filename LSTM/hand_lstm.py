@@ -83,7 +83,8 @@ class HandLSTM(nn.Module):
         
         #reshape hidden_seq p/ retornar
         hidden_seq = torch.cat(hidden_seq, dim=0)  # cat(0)  按第0维进行拼接  将这个list 转化为tensor结构
-        hidden_seq = hidden_seq.transpose(0, 1).contiguous()
+        hidden_seq = hidden_seq.transpose(0, 1)   # transpose(0, 1)  转置 
+
 
         return  hidden_seq, (h_t, c_t)
 
@@ -93,7 +94,7 @@ class Net(nn.Module):
         super().__init__()
         self.bi =bi
         self.lstm = HandLSTM(input_sz,hidden_sz) #nn.LSTM(input_sz,hidden_sz, batch_first=True)
-        if bi == True:
+        if bi == True:                              # 判断是否双向
             hidden_sz = hidden_sz*2
         self.fc1 = nn.Linear(hidden_sz, num_class)   #  线性
         
